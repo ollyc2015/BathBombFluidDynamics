@@ -4,6 +4,8 @@ This is an experimnental project displaying a bath bomb in water. This project w
 
 - [haxe 3.2.1](https://haxe.org/download/version/3.2.1/) is required to build (never versions produce errors)
 
+A [demo](http://oliverbcurtis.co.uk/FluidDynamics/bin/web)
+
 -------
 
 ##Building
