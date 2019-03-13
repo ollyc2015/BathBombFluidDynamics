@@ -1,0 +1,270 @@
+{
+
+  flow : {
+    build : {
+      boot : 'SnowApp',
+      android : {
+        logcat_include : {
+          snow:"snow", snowcaps:"SNOW", art:"art:F", snowcpp:"SNOWCPP", SDL:"SDL", openal:"OpenAL_SLES", snow_log:"SDL/APP"
+        }
+      }
+    }
+  },
+
+  snow : {
+    config : {
+      has_loop : true,
+      config_path : 'config.json'
+    }
+  },
+
+  project : {
+
+    name : 'snow',
+    version : '1.0.0',
+    author : 'snowkit',
+
+    app : {
+      icon : 'flow/icons/ => snow',
+      web : {
+        libs : {
+          howler : './lib/howler.js',
+        }
+      },
+      mobile : {
+        ios : {
+          libs : {
+            native : { snow:'snow' }
+          }
+        },
+        android : {
+          libs : {
+            native : { snow:'snow' }
+          }
+        }
+      }
+    },
+
+    build : {
+      defines : ['hxcpp_static_std'],
+      files : {
+        boot : { path:'flow/boot/SnowApp.hx => haxe/SnowApp.hx', template:['project', 'snow'] },
+      }
+    }
+
+  },
+
+
+  if:{
+
+    "mac && !flow_build_command_line":{
+      files : {
+        plists : { path:'flow/mac/ => ../', template:'project', not_listed:true }
+      },
+    },
+
+    "windows && arch-32 && snow_dynamic_link" : {
+      files : {
+        libsnow : { path:"ndll/Windows/snow.ndll => snow.ndll", not_listed:true }
+      }
+    },
+
+    "mac && arch-32 && snow_dynamic_link" : {
+      files : {
+        libsnow : { path:"ndll/Mac/snow.ndll => ../MacOS/snow.ndll", not_listed:true }
+      }
+    },
+
+    "mac && arch-64 && snow_dynamic_link" : {
+      files : {
+        libsnow : { path:"ndll/Mac64/snow.ndll => ../MacOS/snow.ndll", not_listed:true }
+      }
+    },
+
+    "linux && arch-32 && snow_dynamic_link" : {
+      files : {
+        libsnow : { path:"ndll/Linux/snow.ndll => snow.ndll", not_listed:true }
+      }
+    },
+
+    "linux && arch-64 && snow_dynamic_link" : {
+      files : {
+        libsnow : { path:"ndll/Linux64/snow.ndll => snow.ndll", not_listed:true }
+      }
+    },
+
+    "android && arch-armv7 && snow_dynamic_link" : {
+      build : {
+        files : {
+          libsnow : { path:"ndll/Android/libsnow-v7.so => project/libs/armeabi-v7a/libsnow.so" }
+        }
+      }
+    },
+
+    "android && arch-armv5 && snow_dynamic_link" : {
+      build : {
+        files : {
+          libsnow : { path:"ndll/Android/libsnow.so => project/libs/armeabi/libsnow.so" }
+        }
+      }
+    },
+
+    "android && arch-x86 && snow_dynamic_link" : {
+      build : {
+        files : {
+          libsnow : { path:"ndll/Android/libsnow-x86.so => project/libs/x86/libsnow.so" }
+        }
+      }
+    },
+
+
+    android : {
+      build: {
+        files : {
+          project : { path:"flow/android/ => project/", template:'project' }
+        }
+      }
+    },
+
+    "ios && ios-xcode-project" : {
+      build: {
+        files : {
+          projectfile : { path:"flow/ios/snowapp.xcodeproj => ../../ios.project/{{app.name}}.xcodeproj", template:'project' },
+          classes : { path:"flow/ios/Classes => ../../ios.project/project/Classes", template:'project' },
+          infoplist : { path:"flow/ios/snowapp-Info.plist => ../../ios.project/project/project-Info.plist", template:'project' },
+          prefixheader : { path:"flow/ios/snowapp-Prefix.pch => ../../ios.project/project/project-Prefix.pch", template:'project' }
+        }
+      }
+    },
+
+    ios : {
+      build: {
+        files : {
+          libsnow_fat    : { path:"ndll/iPhone/libsnow.ios.a => ../../ios.project/project/libs/fat/libsnow.a" },
+          libsnow_sim    : { path:"ndll/iPhone/libsnow.iphonesim.a => ../../ios.project/project/libs/sim/libsnow.a" },
+          libsnow_sim64  : { path:"ndll/iPhone/libsnow.iphonesim-64.a => ../../ios.project/project/libs/sim64/libsnow.a" },
+          libsnow_armv6  : { path:"ndll/iPhone/libsnow.iphoneos.a => ../../ios.project/project/libs/armv6/libsnow.a" },
+          libsnow_armv7  : { path:"ndll/iPhone/libsnow.iphoneos-v7.a => ../../ios.project/project/libs/armv7/libsnow.a" },
+          libsnow_armv7s : { path:"ndll/iPhone/libsnow.iphoneos-v7s.a => ../../ios.project/project/libs/armv7s/libsnow.a" },
+          libsnow_armv64 : { path:"ndll/iPhone/libsnow.iphoneos-64.a => ../../ios.project/project/libs/arm64/libsnow.a" }
+        }
+      }
+    },
+
+    "android || linux" : {
+      build : {
+        defines : ['snow_dynamic_link']
+      }
+    },
+
+
+    "mac || windows || linux || android || ios" : {
+      build: {
+        defines : ['snow_native']
+      }
+    },
+
+    web : {
+      build: {
+        defines : ['snow_web']
+      }
+    },
+
+
+
+    snow_web : {
+      files : {
+        index : { path:'flow/web/index.html => index.html', template:'project', not_listed:true },
+        howlerjs : { path:'flow/web/lib/howler.min.js => lib/howler.js', not_listed:true },
+      },
+      build : {
+        flags:[
+          '--macro snow.system.module.Module.set("Audio","snow.core.web.audio.Audio")',
+          '--macro snow.system.module.Module.set("IO","snow.core.web.io.IO")',
+          '--macro snow.system.module.Module.set("Input","snow.core.web.input.Input")',
+          '--macro snow.system.module.Module.set("Windowing","snow.core.web.window.Windowing")',
+          '--macro snow.system.module.Module.set("Assets","snow.core.web.assets.Assets")'
+        ],
+        defines : ['snow_module_audio_howlerjs'],
+        files : {
+        }
+      }
+    },
+
+    "snow_web && debug" : {
+      files : {
+        howlerjs : { path:'flow/web/lib/howler.js => lib/howler.js', not_listed:true },
+      }
+    },
+
+    "snow_web && snow_web_psd" : {
+      app : {
+        web : {
+          libs : {
+            psd : './lib/psd.js'
+          }
+        }
+      },
+      files:{
+        psd : { path:'flow/web/lib/psd.min.js => lib/psd.js', not_listed:true },
+      }
+    },
+
+    "snow_web && snow_web_psd && debug" : {
+      files:{
+        psd : { path:'flow/web/lib/psd.js => lib/psd.js', not_listed:true },
+      }
+    },
+
+    "snow_web && snow_web_tga" : {
+      app : {
+        web : {
+          libs : {
+            tga : './lib/tga.js'
+          }
+        }
+      },
+      files:{
+        tga : { path:'flow/web/lib/tga.min.js => lib/tga.js', not_listed:true },
+      }
+    },
+
+    "snow_web && snow_web_tga && debug" : {
+      files:{
+        tga : { path:'flow/web/lib/tga.js => lib/tga.js', not_listed:true },
+      }
+    },
+
+    snow_native : {
+      build: {
+        flags:[
+          '--macro snow.system.module.Module.set("Audio","snow.core.native.audio.Audio")',
+          '--macro snow.system.module.Module.set("IO","snow.core.native.io.IO")',
+          '--macro snow.system.module.Module.set("Input","snow.core.native.input.Input")',
+          '--macro snow.system.module.Module.set("Windowing","snow.core.native.window.Windowing")',
+          '--macro snow.system.module.Module.set("Assets","snow.core.native.assets.Assets")'
+        ],
+        defines : ['snow_module_input_sdl','snow_module_audio_openal', 'snow_module_windowing_sdl']
+      }
+    },
+
+    snow_module_input_sdl : {
+      build:{ flags:['--macro snow.system.module.Module.set("Input","snow.modules.sdl.Input")'] }
+    },
+
+    snow_module_windowing_sdl : {
+      build:{ flags:['--macro snow.system.module.Module.set("Windowing","snow.modules.sdl.Windowing")'] }
+    },
+
+    snow_module_audio_openal : {
+      build:{ flags:['--macro snow.system.module.Module.set("Audio","snow.modules.openal.Audio")'] }
+    },
+
+    snow_module_audio_howlerjs : {
+      build:{ flags:['--macro snow.system.module.Module.set("Audio","snow.modules.howlerjs.Audio")'] }
+    },
+
+  }
+
+
+}

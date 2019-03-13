@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleDisplayName</key>
+    <string>{{project.name}}</string>
+    <key>CFBundleExecutable</key>
+    <string>${EXECUTABLE_NAME}</string>
+    <key>CFBundleIdentifier</key>
+    <string>{{project.app.package}}</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>${PRODUCT_NAME}</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleVersion</key>
+    <string>{{project.build.number}}</string>
+    <key>CFBundleShortVersionString</key>
+    <string>{{project.version}}</string>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+        {{~#each project.app.mobile._orientation}}
+		  <string>{{this}}</string>
+        {{~/each}}
+	</array>
+    <key>UIStatusBarHidden</key>
+    <{{toString project.app.mobile.fullscreen}}/>
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <true/>
+    <key>UIRequiredDeviceCapabilities</key>
+    <dict>
+    </dict>
+</dict>
+</plist>

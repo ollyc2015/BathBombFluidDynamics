@@ -1,0 +1,1 @@
+uglifyjs bin/web/GPUFluid.js --verbose -c -m --toplevel  --output kou/fluid.min.js

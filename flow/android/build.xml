@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="{{project.app.name}}" default="help">
+
+    <property environment="env"/>
+    <property name="sdk.dir" value="{{flow.config.build.android.sdk}}"/>
+
+    <property file="local.properties"/>
+    <property file="ant.properties"/>
+    <property file="project.properties"/>
+    <property file="passwords.sensitive.properties"/>
+
+    <import file="{{flow.config.build.android.sdk}}/tools/ant/build.xml"/>
+
+</project>

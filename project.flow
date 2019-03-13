@@ -1,0 +1,36 @@
+{
+
+  project : {
+    name : 'GPU Fluid',
+    version : '0.1',
+    author : 'haxiomic',
+
+    app : {
+      name : 'GPUFluid',
+      package : 'com.haxiomic.gpufluid',
+      main: 'Main',
+      output: 'bin/',
+      codepaths: ['src', 'lib']
+    },
+
+    build : {
+      defines : ['analyzer'],
+      flags: [
+        '-dce full',
+        '--no-traces'
+      ],
+      dependencies : {
+        snow: '*',
+        shaderblox : '*',
+        gltoolbox : '*',
+      },
+    },
+
+    files : {
+      index : { path: 'templates/web/index.html => index.html', template: 'project'},
+      images : { path: 'templates/web/images => images' },
+      config : { path: 'config.json => config.json' },
+    }
+  }
+
+}

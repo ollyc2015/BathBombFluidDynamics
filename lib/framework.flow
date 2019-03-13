@@ -1,0 +1,172 @@
+{
+
+  flow : {
+    build : {
+      boot : 'snow.App',
+      android : {
+        logcat_include : {
+          snow:"snow", snowcaps:"SNOW", art:"art:F", snowcpp:"SNOWCPP", SDL:"SDL", openal:"OpenAL_SLES", snow_log:"SDL/APP"
+        }
+      },
+    }
+  },
+
+  snow : {
+    config: {
+      config_path: 'config.json'
+    }
+  },
+
+  project : {
+
+    name : 'snow',
+    version : '1.0.0-alpha.2',
+    author : 'snowkit',
+
+    app : {
+      icon : 'flow/icons/ => snow',
+      web : {
+        libs : {
+          
+        }
+      },
+      mobile : {
+        ios : {
+          libs : {
+            native : { }
+          }
+        },
+        android : {
+          libs : {
+            native : { }
+          }
+        }
+      }
+    },
+
+    build : {
+      hxmls:['snow.hxml'],
+      defines : ['hxcpp_static_std'],
+      dependencies: {
+        linc_openal:'*',
+        linc_timestamp:'*',
+        linc_stb:'*',
+        linc_ogg:'*',
+        linc_sdl:'*',
+        linc_opengl:'*'
+      },
+      files : {
+        snow_hxml : { path:'flow/build/snow.hxml => snow.hxml', template:['project', 'snow'] },
+      },
+      pre:{
+        name: 'snow pre build',
+        script: 'flow/build/hook.pre.js',
+        desc:'handles pre-build steps for snow'
+      }
+    }
+
+  },
+
+
+  if:{
+
+    "mac && !xcode-build":{
+      files : {
+        plists : { path:'flow/mac/ => ../', template:'project', not_listed:true }
+      },
+    },
+
+    "mac || windows || linux" : {
+      build: {
+        defines: ['snow_use_glew']
+      }
+    },
+
+    "mac || windows || linux || android || ios || tvos" : {
+      build: {
+        defines : ['snow_native']
+      }
+    },
+
+    "android || ios || tvos" : {
+      build: {
+        defines: ['linc_opengl_GLES']
+      }
+    },
+
+    web : {
+      build: {
+        defines : ['snow_web']
+      }
+    },
+
+    snow_web : {
+      files : {
+        index : { path:'flow/web/index.html => index.html', template:'project', not_listed:true },
+      },
+      build : {
+        flags:[
+          '--macro snow.Set.assets("snow.core.web.assets.Assets")',
+          '--macro snow.Set.audio("snow.modules.webaudio.Audio")',
+          '--macro snow.Set.runtime("snow.core.web.Runtime")',
+          '--macro snow.Set.io("snow.core.web.io.IO")'
+        ],
+        defines : [],
+        files : {
+        }
+      }
+    },
+
+    "snow_web && snow_web_psd" : {
+      app : {
+        web : {
+          libs : {
+            psd : './lib/psd.js'
+          }
+        }
+      },
+      files:{
+        psd : { path:'flow/web/lib/psd.min.js => lib/psd.js', not_listed:true },
+      }
+    },
+
+    "snow_web && snow_web_psd && debug" : {
+      files:{
+        psd : { path:'flow/web/lib/psd.js => lib/psd.js', not_listed:true },
+      }
+    },
+
+    "snow_web && snow_web_tga" : {
+      app : {
+        web : {
+          libs : {
+            tga : './lib/tga.js'
+          }
+        }
+      },
+      files:{
+        tga : { path:'flow/web/lib/tga.min.js => lib/tga.js', not_listed:true },
+      }
+    },
+
+    "snow_web && snow_web_tga && debug" : {
+      files:{
+        tga : { path:'flow/web/lib/tga.js => lib/tga.js', not_listed:true },
+      }
+    },
+
+    snow_native : {
+      build: {
+        flags:[
+          '--macro snow.Set.assets("snow.core.native.assets.Assets")',
+          '--macro snow.Set.runtime("snow.modules.sdl.Runtime")',
+          '--macro snow.Set.audio("snow.modules.openal.Audio")',
+          '--macro snow.Set.io("snow.modules.sdl.IO")'
+        ],
+        defines : []
+      }
+    },
+  }
+
+
+}
