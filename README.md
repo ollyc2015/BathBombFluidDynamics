@@ -8,7 +8,7 @@ Please check out the [demo](http://oliverbcurtis.co.uk/FluidDynamics2/bin/web) t
 
 -------
 
-##Building
+**Building**
 Install the latest version of haxe from [haxe.org](http://haxe.org/)
 
 Install the dependencies:
