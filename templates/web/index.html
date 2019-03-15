@@ -3,11 +3,19 @@
 
 <head>
 
-    <link rel="icon" href="favicon.png"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+	<link rel="manifest" href="favicon/site.webmanifest">
+	<link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="theme-color" content="#ffffff">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
 
     <style>
+	
+	<!--Scroll bar stuff below-->	
         *{
             box-sizing: border-box;
             -webkit-touch-callout: none;
@@ -18,7 +26,6 @@
             user-select: none;
         }
 
-       
 
         canvas{
             display: block;
@@ -74,13 +81,53 @@
 			text-align: left;
 			}
 		}
+		
+	<!--Side bar stuff below-->	
+		
+		.sidenav {
+		height: 100%;
+		width: 0;
+		position: fixed;
+		z-index: 4;
+		top: 0;
+		left: 0;
+		background-color: #111;
+		overflow-x: hidden;
+		transition: 0.5s;
+		padding-top: 60px;
+		}
+
+		.sidenav a {
+		padding: 8px 8px 8px 32px;
+		text-decoration: none;
+		font-size: 25px;
+		color: #818181;
+		display: block;
+		transition: 0.3s;
+		}
+
+		.sidenav a:hover {
+		color: #f1f1f1;
+		}
+
+		.sidenav .closebtn {
+		position: absolute;
+		top: 0;
+		right: 25px;
+		font-size: 36px;
+		margin-left: 50px;
+		
+		}
+		
+		@media screen and (max-height: 450px) {
+		.sidenav {padding-top: 15px;}
+		.sidenav a {font-size: 18px;}
+		}
 
 
         </style>
 		
-		</style>
-			<script type="text/javascript" src="./dat.gui.min.js"></script>
-		<script>
+
 
         <script type="text/javascript">
             //prevent native touch-scroll
@@ -96,55 +143,72 @@
         <script type="text/javascript" src="{{this}}"></script>
         {{/each}}
 		
+		
 
     </head>
 
     <body>
+
+<span id="close-button" style="font-size:30px;cursor:pointer; position: absolute; z-index: 5; color:white; margin-left:1%; margin-top:1%; display:none;" onclick="openNav()" >&#9776;</span>
 		
-<div class="scrollbar" id="style-5" style="position: absolute; z-index: 2; height: 100%; overflow-x:scroll; padding: 5px; display:inline-block; float:left; background-color:white;" >   
-    <div id="wrapper" class="text-center">
-        <div class="myscrollbar">
-            <img src="images/twilight.jpg">
+<div class="sidenav" id="style-5" style="position: absolute; z-index: 2; height: 100%; display:inline-block;  overflow-x:scroll; float:left; background-color:white;" >   
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	<div id="wrapper" class="text-center" style="padding-left: 5%; padding-top: 25%;">
+        <div class="myscrollbar1">
+            <img src="images/twilight.jpg" class="responsive">
             <p style="font-weight: bold;">Twilight</p>
         </div>
-        <div class="myscrollbar">
-            <img src="images/sex_bomb.jpg">
+        <div class="myscrollbar2">
+            <img src="images/sex_bomb.jpg" class="responsive">
             <p style="font-weight: bold;">Sex Bomb</p>
         </div>
-        <div class="myscrollbar">
-            <img src="images/big_blue.jpg">
+        <div class="myscrollbar3">
+            <img src="images/big_blue.jpg" class="responsive">
             <p style="font-weight: bold;">Big Blue</p>
         </div>
-        <div class="myscrollbar">
-            <img src="images/think_pink.jpg">
+        <div class="myscrollbar4">
+            <img src="images/think_pink.jpg" class="responsive">
             <p style="font-weight: bold;">Think Pink</p>
         </div>
-        <div class="myscrollbar">
-            <img src="images/avobath.jpg">
+        <div class="myscrollbar5">
+            <img src="images/avobath.jpg" class="responsive">
             <p style="font-weight: bold;">Avobath</p>
         </div>
-        <div class="myscrollbar">
-            <img src="images/cheer_up_buttercup.jpg">
+        <div class="myscrollbar6">
+            <img src="images/cheer_up_buttercup.jpg" class="responsive">
             <p style="font-weight: bold;">Cheer Up Buttercup</p>
         </div>
-        <div class="myscrollbar">
-            <img src="images/secret_arts.jpg">
+        <div class="myscrollbar7">
+            <img src="images/secret_arts.jpg" class="responsive">
             <p style="font-weight: bold;">Secret Arts</p>
         </div>
-        <div class="myscrollbar">
-            <img src="images/big_sleep.jpg">
+        <div class="myscrollbar8">
+            <img src="images/big_sleep.jpg" class="responsive">
             <p style="font-weight: bold;">Big Sleep</p>
         </div>
-        <div class="myscrollbar">
-            <img src="images/experimenter.jpg">
+        <div class="myscrollbar9">
+            <img src="images/experimenter.jpg" class="responsive">
             <p style="font-weight: bold;">The Experimenter</p>
         </div>
-        <div class="myscrollbar">
-            <img src="images/intergalactic.jpg">
+        <div class="myscrollbar10">
+            <img src="images/intergalactic.jpg" class="responsive">
             <p style="font-weight: bold;">Intergalactic</p>
         </div>
     </div>
 </div>
+
+
+<script>
+function openNav() {
+  document.getElementById("style-5").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("style-5").style.width = "0";
+  document.getElementById("close-button").style.display = "inline-block";
+}
+</script>
+
         <script type="text/javascript" src="./{{project.app.name}}{{#if project.app.web.min}}.min{{/if}}.js"></script>
     </body>
 

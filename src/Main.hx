@@ -1,6 +1,9 @@
 package;
 
 import haxe.Timer;
+import js.Browser.*;
+
+//import haxe.ui.toolkit.core.PopupManager;
 
 import shaderblox.uniforms.UTexture;
 import snow.modules.opengl.GL;
@@ -24,7 +27,6 @@ typedef TShader = {
 	function deactivate():Void;
 }
 
-//typedef UserConfig = {}
 
 class Main extends snow.App {
 	var gl = GL;
@@ -44,6 +46,18 @@ class Main extends snow.App {
 	var mouseForceShader:MouseForce;
 	//Window
 	static inline var MOUSE_ALWAYS_DOWN:Bool = false;
+	
+	var TWILIGHT = false; 
+	var SEX_BOMB = false; 
+	var BIG_BLUE = false; 
+	var THINK_PINK = false; 
+	var AVOBATH = false; 
+	var CHEER_UP_BUTTERCUP = false; 
+	var SECRET_ARTS = false; 
+	var BIG_SLEEP = false; 
+	var THE_EXPERIMENTOR = false; 
+	var INTERGALACTIC = false;
+	
 	var isMouseDown:Bool = MOUSE_ALWAYS_DOWN;
 	//var isMouseDown:Bool = false;
 	var mousePointKnown:Bool = false;
@@ -113,6 +127,9 @@ class Main extends snow.App {
 				fluidIterations = iterationsParam;
 		}
 		#end
+		
+		
+	
 	}
 
 	override function config( config:AppConfig ) : AppConfig {
@@ -120,6 +137,7 @@ class Main extends snow.App {
 		config.web.prevent_default_mouse_wheel = false;
 		config.window.borderless = true;
 		config.window.fullscreen = true;
+		config.window.title = "Bath Bomb Mania!";
 
 		//for some reason, window width and height are set initially from config and ignores true size
 		//(in the case of web)
@@ -137,6 +155,8 @@ class Main extends snow.App {
 		this.window = app.window;
 
 		init();
+		//Handle clicks made when selecting a bath bomb/ render different colours depending on bath bomb chosen
+		bathBombSelection();
 		this.window.onevent = onWindowEvent;
 		this.window.onrender = render;
 	}
@@ -187,7 +207,7 @@ class Main extends snow.App {
 		renderParticlesShader.FLOAT_DATA = particles.floatData ? "true" : "false";
 
 		//setup internal data
-		dyeColor.set(1, 0, 0);
+		dyeColor.set(201, 221, 255);
 
 		initTime = haxe.Timer.stamp();
 		lastTime = initTime;
@@ -212,13 +232,15 @@ class Main extends snow.App {
 		gui.add({f:particles.reset}, 'f').name('Reset Particles');
 		//stop fluid
 		gui.add({f:fluid.clear}, 'f').name('Stop Fluid');
+				
+			
 	}
 
 	override function update( dt:Float ){
 		time = haxe.Timer.stamp() - initTime;
 		performanceMonitor.recordFrameTime(dt);
-
-		dt = 0.016;//@!
+		//Smaller number creates a bigger ripple, was 0.016
+		dt = 0.090;//@!
 		//Physics
 		//interaction
 		updateDyeShader.isMouseDown.set(isMouseDown && lastMousePointKnown);
@@ -235,9 +257,9 @@ class Main extends snow.App {
 
 		//update dye color
 		//cycle hue
-		if(hueCycleEnabled)
+		if(hueCycleEnabled) 
 			dyeColorHSB.hue += 1.2;
-		if(isMouseDown){
+		if(isMouseDown && !TWILIGHT && !SEX_BOMB && !BIG_BLUE && !THINK_PINK && !AVOBATH && !CHEER_UP_BUTTERCUP && !SECRET_ARTS && !BIG_SLEEP && !THE_EXPERIMENTOR && !INTERGALACTIC){
 			//cycle further by mouse velocity
 			if(hueCycleEnabled){
 				var vx = (mouse.x - lastMouse.x)/(dt*window.width);
@@ -245,8 +267,66 @@ class Main extends snow.App {
 				dyeColorHSB.hue += Math.sqrt(vx*vx + vy*vy)*0.5;
 			}
 			var rgb = dyeColorHSB.toRGB();
-			dyeColor.set(rgb.red/255, rgb.green/255, rgb.blue/255);
+			dyeColor.set(rgb.red/255, rgb.green/255, rgb.blue/255 );
+		}else if(isMouseDown && TWILIGHT == true){
+
+				var vx = (mouse.x - lastMouse.x)/(dt*window.width);
+				var vy = (mouse.y - lastMouse.y)/(dt*window.height);
+				dyeColorHSB.hue += Math.sqrt(vx*vx + vy*vy)*0.5;
+
+			var rgb = dyeColorHSB.toRGB();
+			dyeColor.set(232/255, 165/255, 207/255); 
+		}else if (isMouseDown && SEX_BOMB == true){
+			
+			var vx = (mouse.x - lastMouse.x)/(dt*window.width);
+				var vy = (mouse.y - lastMouse.y)/(dt*window.height);
+				dyeColorHSB.hue += Math.sqrt(vx*vx + vy*vy)*0.5;
+
+			var rgb = dyeColorHSB.toRGB();
+			dyeColor.set(251/255, 141/255, 155/255); 
+			
+			
+		}else if (isMouseDown && BIG_BLUE == true){
+			
+			var vx = (mouse.x - lastMouse.x)/(dt*window.width);
+				var vy = (mouse.y - lastMouse.y)/(dt*window.height);
+				dyeColorHSB.hue += Math.sqrt(vx*vx + vy*vy)*0.5;
+
+			var rgb = dyeColorHSB.toRGB();
+			dyeColor.set(36/255, 175/255, 190/255); 
+			
+			
+			
+		}else if (isMouseDown && THINK_PINK == true){
+			
+			
+			
+		}else if (isMouseDown && AVOBATH == true){
+			
+			
+			
+		}else if (isMouseDown && CHEER_UP_BUTTERCUP == true){
+			
+			
+			
+		}else if (isMouseDown && SECRET_ARTS == true){
+			
+			
+			
+		}else if (isMouseDown && BIG_SLEEP == true){
+			
+			
+			
+		}else if (isMouseDown && THE_EXPERIMENTOR == true){
+			
+			
+			
+		}else if (isMouseDown && INTERGALACTIC == true){
+			
+			
+			
 		}
+
 
 		updateLastMouse();
 	}
@@ -427,6 +507,109 @@ class Main extends snow.App {
 		particles.reset();	
 		fluid.clear();
 	}
+	
+	function bathBombSelection(): Void{
+		
+		
+		document.querySelector('.myscrollbar1').addEventListener('click', function() {
+			// twilight clicked
+			closeNav();
+			reset();
+			dyeColor.set(255, 204, 255);
+			TWILIGHT = true;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
+			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
+			
+		});
+		
+		document.querySelector('.myscrollbar2').addEventListener('click', function() {
+			// Sex Bomb clicked
+			closeNav();
+			reset();
+			dyeColor.set(251, 141, 155);
+			TWILIGHT = false;  SEX_BOMB = true; BIG_BLUE = false; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
+			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
+			
+		});
+		
+		document.querySelector('.myscrollbar3').addEventListener('click', function() {
+			// Big Blue clicked
+			closeNav();
+			reset();
+			dyeColor.set(36, 175, 190);
+			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = true; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
+			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
+		});
+		
+		document.querySelector('.myscrollbar4').addEventListener('click', function() {
+			// Think Pink clicked
+			closeNav();
+			reset();
+			dyeColor.set(255, 204, 255);
+			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = true; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
+			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
+		});
+		
+		document.querySelector('.myscrollbar5').addEventListener('click', function() {
+			// Avobath clicked
+			closeNav();
+			reset();
+			dyeColor.set(255, 204, 255);
+			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = false; AVOBATH = true; CHEER_UP_BUTTERCUP = false; 
+			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
+		});
+		
+		document.querySelector('.myscrollbar6').addEventListener('click', function() {
+			// Cheer Up Buttercup clicked
+			closeNav();
+			reset();
+			dyeColor.set(255, 204, 255);
+			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = true; 
+			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
+		});
+		
+		document.querySelector('.myscrollbar7').addEventListener('click', function() {
+			// Secret Arts clicked
+			closeNav();
+			reset();
+			dyeColor.set(255, 204, 255);
+			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
+			SECRET_ARTS = true; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
+		});
+		
+		document.querySelector('.myscrollbar8').addEventListener('click', function() {
+			// Big Sleep clicked
+			closeNav();
+			reset();
+			dyeColor.set(255, 204, 255);
+			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
+			SECRET_ARTS = false; BIG_SLEEP = true; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
+		});
+		
+		document.querySelector('.myscrollbar9').addEventListener('click', function() {
+			// The Experimenter clicked
+			closeNav();
+			reset();
+			dyeColor.set(255, 204, 255);
+			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
+			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = true; INTERGALACTIC = false;
+		});
+		
+		document.querySelector('.myscrollbar10').addEventListener('click', function() {
+			// Intergalactic clicked
+			closeNav();
+			reset();
+			dyeColor.set(255, 204, 255);
+			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
+			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = true;
+		});
+		
+	} 
+	
+	function closeNav() {
+	document.getElementById("style-5").style.width = "0";
+	document.getElementById("close-button").style.display = "inline-block";
+	}
+	
 
 	//coordinate conversion
 	inline function windowToClipSpaceX(x:Float) return (x/window.width)*2 - 1;
@@ -677,7 +860,8 @@ class MouseDye extends GPUFluid.UpdateDye{}
 			float R = 0.010;
 			float m = exp(-l/R); //drag coefficient
 			m *= projectedFraction * projectedFraction;
-			vec2 targetVelocity = mouseVelocity * dx * 1.4;
+			//vec2 targetVelocity = mouseVelocity * dx * 1.4; | removed the dx as this reduces the fractured distance which is needed when moving the bath bomb fast 
+			vec2 targetVelocity = mouseVelocity * 1.4;
 
 			v += (targetVelocity - v)*(m + m*m*m*8.0)*(0.2);
 		}

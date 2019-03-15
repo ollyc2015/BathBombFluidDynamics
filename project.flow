@@ -23,6 +23,7 @@
         snow: '*',
         shaderblox : '*',
         gltoolbox : '*',
+		
       },
     },
 
@@ -30,6 +31,7 @@
       index : { path: 'templates/web/index.html => index.html', template: 'project'},
       images : { path: 'templates/web/images => images' },
       config : { path: 'config.json => config.json' },
+
     }
   }
 
