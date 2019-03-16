@@ -298,7 +298,7 @@ class InitialVelocity extends PlaneTexture{}
 		gl_PointSize = 1.0;
 		gl_Position = vec4(p, 0.0, 1.0);
 
-		color = vec4(209, 226, 255, 1.0);
+		color = vec4(1.0, 1.0, 1.0, 1.0);
 	}
 ')
 @:frag('

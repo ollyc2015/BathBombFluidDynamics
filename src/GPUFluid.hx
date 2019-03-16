@@ -170,6 +170,7 @@ class GPUFluid{
 		pressureRenderTarget.swap();
 
 		dyeRenderTarget.clear(gl.COLOR_BUFFER_BIT);
+		
 	}
 
 	inline function advect(target:RenderTarget2Phase, dt:Float){
