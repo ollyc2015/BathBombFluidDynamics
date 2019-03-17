@@ -16,8 +16,7 @@
     build : {
       defines : ['analyzer'],
       flags: [
-        '-dce full',
-        '--no-traces'
+        '-dce full'
       ],
       dependencies : {
         snow: '*',

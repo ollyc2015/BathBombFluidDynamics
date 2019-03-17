@@ -48,6 +48,7 @@ class Main extends snow.App {
 	//Window
 	static inline var MOUSE_ALWAYS_DOWN:Bool = false;
 	
+	var HAS_RUN = false;
 	var TWILIGHT = false; 
 	var SEX_BOMB = false; 
 	var BIG_BLUE = false; 
@@ -250,6 +251,7 @@ class Main extends snow.App {
 		//step physics
 		fluid.step(dt);
 
+
 		particles.flowVelocityField = fluid.velocityRenderTarget.readFromTexture;
 
 		if(renderParticlesEnabled){
@@ -267,21 +269,57 @@ class Main extends snow.App {
 				var vx = (mouse.x - lastMouse.x)/(dt*window.width);
 				var vy = (mouse.y - lastMouse.y)/(dt*window.height);
 				dyeColorHSB.hue += Math.sqrt(vx * vx + vy * vy) * 0.5;
-				
+				 
 			}
 			var rgb = dyeColorHSB.toRGB();
 			dyeColor.set(rgb.red / 255, rgb.green / 255, rgb.blue / 255 );
 			
-		}else if(isMouseDown && TWILIGHT == true){
-
-				var vx = (mouse.x - lastMouse.x)/(dt*window.width);
-				var vy = (mouse.y - lastMouse.y)/(dt*window.height);
-				dyeColorHSB.hue += Math.sqrt(vx*vx + vy*vy)*0.5;
+		}else if (isMouseDown && TWILIGHT == true){
+			 
+			if (!HAS_RUN){
+			
+			var x_location = windowToClipSpaceX(mouse.x);
+			var y_location = windowToClipSpaceY(mouse.y);
+			
+			var mouse_x = (x_location + 1) / 2 * fluid.width - 25;
+			var mouse_y = (y_location + 1) / 2 * fluid.height - 25;
+				
+			var image:js.html.ImageElement = cast document.querySelector('img[src="images/twilight_dye.png"]');
+			if(image !=null){
+			gl.bindTexture(gl.TEXTURE_2D, fluid.dyeRenderTarget.readFromTexture);
+			gl.current_context.texSubImage2D(gl.TEXTURE_2D, 0,  Math.round(mouse_x), Math.round(mouse_y), RenderingContext.RGB, RenderingContext.UNSIGNED_BYTE, image);
+			
+			}
+			
+			HAS_RUN = true;
+			}
+			
+			var vx = (mouse.x - lastMouse.x)/(dt*window.width);
+			var vy = (mouse.y - lastMouse.y)/(dt*window.height);
+			dyeColorHSB.hue += Math.sqrt(vx*vx + vy*vy)*0.5;
 
 			var rgb = dyeColorHSB.toRGB();
 			dyeColor.set(232 / 255, 165 / 255, 207 / 255);
 			
 		}else if (isMouseDown && SEX_BOMB == true){
+			
+			if (!HAS_RUN){
+			
+			var x_location = windowToClipSpaceX(mouse.x);
+			var y_location = windowToClipSpaceY(mouse.y);
+			
+			var mouse_x = (x_location + 1) / 2 * fluid.width - 25;
+			var mouse_y = (y_location + 1) / 2 * fluid.height - 25;
+				
+			var image:js.html.ImageElement = cast document.querySelector('img[src="images/sex_bomb_dye.png"]');
+			if(image !=null){
+			gl.bindTexture(gl.TEXTURE_2D, fluid.dyeRenderTarget.readFromTexture);
+			gl.current_context.texSubImage2D(gl.TEXTURE_2D, 0,  Math.round(mouse_x), Math.round(mouse_y), RenderingContext.RGB, RenderingContext.UNSIGNED_BYTE, image);
+			
+			}
+			
+			HAS_RUN = true;
+			}
 			
 			var vx = (mouse.x - lastMouse.x)/(dt*window.width);
 				var vy = (mouse.y - lastMouse.y)/(dt*window.height);
@@ -292,6 +330,24 @@ class Main extends snow.App {
 			
 			
 		}else if (isMouseDown && BIG_BLUE == true){
+			
+			if (!HAS_RUN){
+			
+			var x_location = windowToClipSpaceX(mouse.x);
+			var y_location = windowToClipSpaceY(mouse.y);
+			
+			var mouse_x = (x_location + 1) / 2 * fluid.width - 25;
+			var mouse_y = (y_location + 1) / 2 * fluid.height - 25;
+				
+			var image:js.html.ImageElement = cast document.querySelector('img[src="images/big_blue_dye.png"]');
+			if(image !=null){
+			gl.bindTexture(gl.TEXTURE_2D, fluid.dyeRenderTarget.readFromTexture);
+			gl.current_context.texSubImage2D(gl.TEXTURE_2D, 0,  Math.round(mouse_x), Math.round(mouse_y), RenderingContext.RGB, RenderingContext.UNSIGNED_BYTE, image);
+			
+			}
+			
+			HAS_RUN = true;
+			}
 			
 			var vx = (mouse.x - lastMouse.x)/(dt*window.width);
 				var vy = (mouse.y - lastMouse.y)/(dt*window.height);
@@ -304,6 +360,24 @@ class Main extends snow.App {
 			
 		}else if (isMouseDown && THINK_PINK == true){
 			
+			if (!HAS_RUN){
+			
+			var x_location = windowToClipSpaceX(mouse.x);
+			var y_location = windowToClipSpaceY(mouse.y);
+			
+			var mouse_x = (x_location + 1) / 2 * fluid.width - 25;
+			var mouse_y = (y_location + 1) / 2 * fluid.height - 25;
+				
+			var image:js.html.ImageElement = cast document.querySelector('img[src="images/think_pink_dye.png"]');
+			if(image !=null){
+			gl.bindTexture(gl.TEXTURE_2D, fluid.dyeRenderTarget.readFromTexture);
+			gl.current_context.texSubImage2D(gl.TEXTURE_2D, 0,  Math.round(mouse_x), Math.round(mouse_y), RenderingContext.RGB, RenderingContext.UNSIGNED_BYTE, image);
+			
+			}
+			
+			HAS_RUN = true;
+			}
+			
 			var vx = (mouse.x - lastMouse.x)/(dt*window.width);
 				var vy = (mouse.y - lastMouse.y)/(dt*window.height);
 				dyeColorHSB.hue += Math.sqrt(vx*vx + vy*vy)*0.5;
@@ -315,6 +389,24 @@ class Main extends snow.App {
 			
 		}else if (isMouseDown && AVOBATH == true){
 			
+			if (!HAS_RUN){
+			
+			var x_location = windowToClipSpaceX(mouse.x);
+			var y_location = windowToClipSpaceY(mouse.y);
+			
+			var mouse_x = (x_location + 1) / 2 * fluid.width - 25;
+			var mouse_y = (y_location + 1) / 2 * fluid.height - 25;
+				
+			var image:js.html.ImageElement = cast document.querySelector('img[src="images/avobath_dye.png"]');
+			if(image !=null){
+			gl.bindTexture(gl.TEXTURE_2D, fluid.dyeRenderTarget.readFromTexture);
+			gl.current_context.texSubImage2D(gl.TEXTURE_2D, 0,  Math.round(mouse_x), Math.round(mouse_y), RenderingContext.RGB, RenderingContext.UNSIGNED_BYTE, image);
+			
+			}
+			
+			HAS_RUN = true;
+			}
+			
 			var vx = (mouse.x - lastMouse.x)/(dt*window.width);
 				var vy = (mouse.y - lastMouse.y)/(dt*window.height);
 				dyeColorHSB.hue += Math.sqrt(vx*vx + vy*vy)*0.5;
@@ -324,6 +416,24 @@ class Main extends snow.App {
 		
 			
 		}else if (isMouseDown && CHEER_UP_BUTTERCUP == true){
+			
+			if (!HAS_RUN){
+			
+			var x_location = windowToClipSpaceX(mouse.x);
+			var y_location = windowToClipSpaceY(mouse.y);
+			
+			var mouse_x = (x_location + 1) / 2 * fluid.width - 25;
+			var mouse_y = (y_location + 1) / 2 * fluid.height - 25;
+				
+			var image:js.html.ImageElement = cast document.querySelector('img[src="images/cheer_up_buttercup_dye.png"]');
+			if(image !=null){
+			gl.bindTexture(gl.TEXTURE_2D, fluid.dyeRenderTarget.readFromTexture);
+			gl.current_context.texSubImage2D(gl.TEXTURE_2D, 0,  Math.round(mouse_x), Math.round(mouse_y), RenderingContext.RGB, RenderingContext.UNSIGNED_BYTE, image);
+			
+			}
+			
+			HAS_RUN = true;
+			}
 			
 			var vx = (mouse.x - lastMouse.x)/(dt*window.width);
 				var vy = (mouse.y - lastMouse.y)/(dt*window.height);
@@ -336,6 +446,25 @@ class Main extends snow.App {
 			
 		}else if (isMouseDown && SECRET_ARTS == true){
 			
+			
+			if (!HAS_RUN){
+			
+			var x_location = windowToClipSpaceX(mouse.x);
+			var y_location = windowToClipSpaceY(mouse.y);
+			
+			var mouse_x = (x_location + 1) / 2 * fluid.width - 25;
+			var mouse_y = (y_location + 1) / 2 * fluid.height - 25;
+				
+			var image:js.html.ImageElement = cast document.querySelector('img[src="images/secret_arts_dye.png"]');
+			if(image !=null){
+			gl.bindTexture(gl.TEXTURE_2D, fluid.dyeRenderTarget.readFromTexture);
+			gl.current_context.texSubImage2D(gl.TEXTURE_2D, 0,  Math.round(mouse_x), Math.round(mouse_y), RenderingContext.RGB, RenderingContext.UNSIGNED_BYTE, image);
+			
+			}
+			
+			HAS_RUN = true;
+			}
+			
 			var vx = (mouse.x - lastMouse.x)/(dt*window.width);
 				var vy = (mouse.y - lastMouse.y)/(dt*window.height);
 				dyeColorHSB.hue += Math.sqrt(vx*vx + vy*vy)*0.5;
@@ -345,7 +474,25 @@ class Main extends snow.App {
 			
 			
 			
-		}else if (isMouseDown && BIG_SLEEP == true){
+		}else if (isMouseDown && BIG_SLEEP == true){	
+			
+			if (!HAS_RUN){
+			
+			var x_location = windowToClipSpaceX(mouse.x);
+			var y_location = windowToClipSpaceY(mouse.y);
+			
+			var mouse_x = (x_location + 1) / 2 * fluid.width - 25;
+			var mouse_y = (y_location + 1) / 2 * fluid.height - 25;
+				
+			var image:js.html.ImageElement = cast document.querySelector('img[src="images/big_sleep_dye.png"]');
+			if(image !=null){
+			gl.bindTexture(gl.TEXTURE_2D, fluid.dyeRenderTarget.readFromTexture);
+			gl.current_context.texSubImage2D(gl.TEXTURE_2D, 0,  Math.round(mouse_x), Math.round(mouse_y), RenderingContext.RGB, RenderingContext.UNSIGNED_BYTE, image);
+			
+			}
+			
+			HAS_RUN = true;
+			}
 			
 			var vx = (mouse.x - lastMouse.x)/(dt*window.width);
 				var vy = (mouse.y - lastMouse.y)/(dt*window.height);
@@ -355,7 +502,25 @@ class Main extends snow.App {
 			dyeColor.set(105/255, 212/255, 234/255); 
 					
 			
-		}else if (isMouseDown && THE_EXPERIMENTOR == true){
+		}else if (isMouseDown && THE_EXPERIMENTOR == true){		
+			
+			if (!HAS_RUN){
+			
+			var x_location = windowToClipSpaceX(mouse.x);
+			var y_location = windowToClipSpaceY(mouse.y);
+			
+			var mouse_x = (x_location + 1) / 2 * fluid.width - 25;
+			var mouse_y = (y_location + 1) / 2 * fluid.height - 25;
+				
+			var image:js.html.ImageElement = cast document.querySelector('img[src="images/experimenter_dye.png"]');
+			if(image !=null){
+			gl.bindTexture(gl.TEXTURE_2D, fluid.dyeRenderTarget.readFromTexture);
+			gl.current_context.texSubImage2D(gl.TEXTURE_2D, 0,  Math.round(mouse_x), Math.round(mouse_y), RenderingContext.RGB, RenderingContext.UNSIGNED_BYTE, image);
+			
+			}
+			
+			HAS_RUN = true;
+			}
 			
 			if(hueCycleEnabled) 
 			dyeColorHSB.hue += 1.2;
@@ -370,6 +535,24 @@ class Main extends snow.App {
 					
 			
 		}else if (isMouseDown && INTERGALACTIC == true){
+			
+			if (!HAS_RUN){
+			
+			var x_location = windowToClipSpaceX(mouse.x);
+			var y_location = windowToClipSpaceY(mouse.y);
+			
+			var mouse_x = (x_location + 1) / 2 * fluid.width - 25;
+			var mouse_y = (y_location + 1) / 2 * fluid.height - 25;
+				
+			var image:js.html.ImageElement = cast document.querySelector('img[src="images/intergalactic_dye.png"]');
+			if(image !=null){
+			gl.bindTexture(gl.TEXTURE_2D, fluid.dyeRenderTarget.readFromTexture);
+			gl.current_context.texSubImage2D(gl.TEXTURE_2D, 0,  Math.round(mouse_x), Math.round(mouse_y), RenderingContext.RGB, RenderingContext.UNSIGNED_BYTE, image);
+			
+			}
+			
+			HAS_RUN = true;
+			}
 			
 			if(hueCycleEnabled) 
 			dyeColorHSB.hue += 1.2;
@@ -562,18 +745,17 @@ class Main extends snow.App {
 	function reset():Void{
 		particles.reset();	
 		fluid.clear();
+		this.HAS_RUN = false;
 		
 	}
 	
 	function bathBombSelection(): Void{
 		
-		//fluid.dyeRenderTarget.writeToTexture(255,204,255)
 		document.querySelector('.myscrollbar1').addEventListener('click', function() {
 			// twilight clicked
+			HAS_RUN = false;
 			closeNav(); 
-			reset(); 
-			var image:js.html.ImageElement = cast document.querySelector('img[src="images/twilight.jpg"]');
-			gl.current_context.texSubImage2D(cast fluid.dyeRenderTarget.writeToTexture, 0, Math.round(mouse.x), Math.round(mouse.y), RenderingContext.RGB, RenderingContext.UNSIGNED_BYTE, image);
+			reset();
 			TWILIGHT = true;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
 			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
 			
@@ -581,9 +763,9 @@ class Main extends snow.App {
 		
 		document.querySelector('.myscrollbar2').addEventListener('click', function() {
 			// Sex Bomb clicked
+			HAS_RUN = false;
 			closeNav();
 			reset();
-			dyeColor.set(251, 141, 155);
 			TWILIGHT = false;  SEX_BOMB = true; BIG_BLUE = false; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
 			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
 			
@@ -591,72 +773,72 @@ class Main extends snow.App {
 		
 		document.querySelector('.myscrollbar3').addEventListener('click', function() {
 			// Big Blue clicked
+			HAS_RUN = false;
 			closeNav();
 			reset();
-			dyeColor.set(36, 175, 190);
 			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = true; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
 			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
 		});
 		
 		document.querySelector('.myscrollbar4').addEventListener('click', function() {
 			// Think Pink clicked
+			HAS_RUN = false;
 			closeNav();
 			reset();
-			dyeColor.set(216, 71, 120);
 			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = true; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
 			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
 		});
 		
 		document.querySelector('.myscrollbar5').addEventListener('click', function() {
 			// Avobath clicked
+			HAS_RUN = false;
 			closeNav();
 			reset();
-			dyeColor.set(140, 183, 102);
 			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = false; AVOBATH = true; CHEER_UP_BUTTERCUP = false; 
 			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
 		});
 		
 		document.querySelector('.myscrollbar6').addEventListener('click', function() {
 			// Cheer Up Buttercup clicked
+			HAS_RUN = false;
 			closeNav();
 			reset();
-			dyeColor.set(253, 217, 103);
 			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = true; 
 			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
 		});
 		
 		document.querySelector('.myscrollbar7').addEventListener('click', function() {
 			// Secret Arts clicked
+			HAS_RUN = false;
 			closeNav();
 			reset();
-			dyeColor.set(141, 140, 145);
 			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
 			SECRET_ARTS = true; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
 		});
 		
 		document.querySelector('.myscrollbar8').addEventListener('click', function() {
 			// Big Sleep clicked
+			HAS_RUN = false;
 			closeNav();
 			reset();
-			dyeColor.set(105, 212, 234);
 			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
 			SECRET_ARTS = false; BIG_SLEEP = true; THE_EXPERIMENTOR = false; INTERGALACTIC = false;
 		});
 		
 		document.querySelector('.myscrollbar9').addEventListener('click', function() {
 			// The Experimenter clicked
+			HAS_RUN = false;
 			closeNav();
 			reset();
-			dyeColor.set(255, 255, 0);
 			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
 			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = true; INTERGALACTIC = false;
 		});
 		
 		document.querySelector('.myscrollbar10').addEventListener('click', function() {
 			// Intergalactic clicked
+			HAS_RUN = false;
 			closeNav();
 			reset();
-			dyeColor.set(18, 141, 189);
 			TWILIGHT = false;  SEX_BOMB = false; BIG_BLUE = false; THINK_PINK = false; AVOBATH = false; CHEER_UP_BUTTERCUP = false; 
 			SECRET_ARTS = false; BIG_SLEEP = false; THE_EXPERIMENTOR = false; INTERGALACTIC = true;
 		});
@@ -679,7 +861,7 @@ class Main extends snow.App {
 	}
 	override function onmouseup( x : Float , y : Float , button : Int, _, _){
 		timer;
-		timer.run = function() { this.isMouseDown = false;}
+		timer.run = function() { this.isMouseDown = false; this.HAS_RUN = false;}
 		
 		//this.isMouseDown = false;
 	}
@@ -708,7 +890,7 @@ class Main extends snow.App {
 		updateTouchCoordinate(x, y);
 		
 		timer;
-		timer.run = function() { this.isMouseDown = false;}
+		timer.run = function() { this.isMouseDown = false; this.HAS_RUN = false;}
 		
 		//this.isMouseDown = false;
 	}
