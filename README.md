@@ -2,7 +2,7 @@
 
 This is an experimental project displaying a bath bomb in water. This project was only made possible due to the awesome code base from **Haxiomic**. To view the original build, please go to https://github.com/haxiomic/GPU-Fluid-Experiments/
 
-- [haxe 3.2.1](https://haxe.org/download/version/3.2.1/) is required to build (never versions produce errors)
+- [haxe 3.2.1](https://haxe.org/download/version/3.2.1/) is required to build (newer versions produce errors)
 
 Please check out the [demo](http://oliverbcurtis.co.uk/FluidDynamics2/bin/web) to see the it in action!
 
