@@ -4,7 +4,7 @@ This is an experimental project displaying a bath bomb in water. This project wa
 
 - [haxe 3.2.1](https://haxe.org/download/version/3.2.1/) is required to build (newer versions produce errors)
 
-Please check out the [demo](http://oliverbcurtis.co.uk/FluidDynamics2/bin/web) to see the it in action!
+Please check out the [demo](http://oliverbcurtis.co.uk/FluidDynamics2/bin/web) to see the it in action! if you're using a Google Pixel phone, please run the demo using Firefox browser. 
 
 -------
 
