@@ -29,3 +29,7 @@ cd into the project root and to build and run execute:
 	haxelib run flow run web
 
 (it'll start a server and open a web browser)
+
+**Also**
+
+I have another repo found here: https://github.com/ollyc2015/LushMoods where I implement a fluid simulation in native Android - I started to get tech interns to build a workflow, but the project was abondoned, when I get time I will look to fix it. However, if you select through the screens, you will get to the fluid simulation which you can play with.
