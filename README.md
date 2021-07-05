@@ -4,7 +4,7 @@ This is an experimental project simulating a bath bomb in digital water. This pr
 
 - [haxe 3.2.1](https://haxe.org/download/version/3.2.1/) is required to build (newer versions produce errors)
 
-Please check out the [demo](http://oliverbcurtis.co.uk/FluidDynamics2/bin/web) to see the it in action! if you're using a Google Pixel phone, please run the demo using Firefox browser. 
+Please check out the [demo](https://bathbombmania.000webhostapp.com/BathBombFluidDynamics/bin/web) to see the it in action! if you're using a Google Pixel phone, please run the demo using Firefox browser. I have recently moved the demo to a free hosting service, so apologies for slow loading times.
 
 -------
 
